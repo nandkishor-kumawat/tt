@@ -1,0 +1,64 @@
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) { 
+        $('#loading_effect').removeClass('d-none');
+        
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+          $('#loading_effect').addClass('d-none');
+        }        
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+
+
+
+function reloadLoginCaptcha(url) {
+  $.ajax({
+    url: url,
+    headers: {'X-Requested-With': 'XMLHttpRequest'},    
+    dataType: "text",  
+    cache:false,
+    type: "GET",
+    data:"flag=true", 
+    success : function(data){
+        $('#captcha_image').html(data);
+    }
+  });
+}
+
+if ($('#room').length) {
+  var select_box_element = document.querySelector('#room');
+  dselect(select_box_element, {
+    search: true
+  });
+}
+
+if ($('#faculty').length) {
+  var select_box_element = document.querySelector('#faculty');
+  dselect(select_box_element, {
+    search: true
+  });
+}
+
+if ($('#course').length) {
+  var select_box_element = document.querySelector('#course');
+  dselect(select_box_element, {
+    search: true
+  });
+}
+
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl)
+})
